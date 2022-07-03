@@ -26,4 +26,3 @@ def fetch_spacex_last_launch(launch_id):
         download_image(image_url, f'spacex_{image_number}.jpeg')
 
 
-fetch_spacex_last_launch(67)
