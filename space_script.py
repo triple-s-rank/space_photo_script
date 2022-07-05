@@ -4,9 +4,9 @@ from urllib.parse import urlparse, unquote
 import requests
 from dotenv import load_dotenv
 
-
 Path(f'{Path.cwd()}\images').mkdir(parents=True, exist_ok=True)
 load_dotenv()
+
 
 def download_image(image_url, filename):
     response = requests.get(image_url)
@@ -30,17 +30,17 @@ def fetch_spacex_last_launch(launch_id):
         download_image(image_url, f'spacex_{image_number}.jpeg')
 
 
-def fetch_nasa_apod():
+def fetch_nasa_apod(images_to_download):
     apod_url = "https://api.nasa.gov/planetary/apod"
-    params = {'api_key': os.environ.get('API_KEY')}
+    params = {'api_key': os.environ.get('API_KEY'), 'count': images_to_download}
     response = requests.get(url=apod_url, params=params)
     response.raise_for_status()
-    return response.json()['url']
+    for apod in response.json():
+        download_image(apod['url'], get_file_name(apod['url']))
 
 
-def get_file_type(random_url):
+def get_file_name(random_url):
     parsed_url = urlparse(random_url)
     unquoted = unquote(parsed_url.path)
-    path, extension = os.path.splitext(unquoted)
-    return extension
-
+    path, downloaded_filename = os.path.split(unquoted)
+    return downloaded_filename
