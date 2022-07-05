@@ -1,4 +1,5 @@
 import os.path
+from datetime import datetime
 from pathlib import Path
 from urllib.parse import urlparse, unquote
 import requests
@@ -44,3 +45,16 @@ def get_file_name(random_url):
     unquoted = unquote(parsed_url.path)
     path, downloaded_filename = os.path.split(unquoted)
     return downloaded_filename
+
+
+def fetch_nasa_epic(date):
+    endpoint = f'https://api.nasa.gov/EPIC/api/natural/date/{date}'
+    params = {'api_key': os.environ.get('API_KEY')}
+    response = requests.get(url=endpoint, params=params)
+    for photo in response.json():
+        photo_date = datetime.strptime(photo['date'], '%Y-%m-%d %H:%M:%S')
+        photo_name = photo['image']
+        photo_url = f'https://api.nasa.gov/EPIC/archive/natural/' \
+                    f'{photo_date.year}/{photo_date.month}/{photo_date.day}/png/{photo_name}.png'
+        download_image(photo_url, f'{photo_name}.png')
+
