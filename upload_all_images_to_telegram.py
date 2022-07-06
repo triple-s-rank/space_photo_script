@@ -6,7 +6,7 @@ import telegram
 from dotenv import load_dotenv
 
 
-def publish_image(delay=14400):
+def publish_all_images(delay):
     bot = telegram.Bot(token=os.environ.get('BOT_API_KEY'))
     while True:
         for root, dirs, files in os.walk('images'):
@@ -21,7 +21,7 @@ if __name__ == "__main__":
     parser.add_argument('-t', '--time_delay', help='Time delay in hours.', type=int)
     args = parser.parse_args()
     if not args.time_delay:
-        publish_image(os.environ.get('TIME_DELAY'))
+        publish_all_images(os.environ.get('TIME_DELAY'))
     else:
-        publish_image(args.time_delay*3600)
+        publish_all_images(args.time_delay*3600)
 
