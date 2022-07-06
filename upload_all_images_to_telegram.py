@@ -21,7 +21,7 @@ if __name__ == "__main__":
     parser.add_argument('-t', '--time_delay', help='Time delay in hours.', type=int)
     args = parser.parse_args()
     if not args.time_delay:
-        publish_all_images(os.environ.get('TIME_DELAY'))
+        publish_all_images(os.environ.get('TIME_DELAY')*3600)
     else:
         publish_all_images(args.time_delay*3600)
 
