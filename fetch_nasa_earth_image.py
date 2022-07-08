@@ -12,6 +12,7 @@ def fetch_nasa_epic(date, api_key):
     endpoint = f'https://api.nasa.gov/EPIC/api/natural/date/{date}'
     params = {'api_key': api_key}
     response = requests.get(url=endpoint, params=params)
+    response.raise_for_status()
     for photo in response.json():
         photo_date = datetime.strptime(photo['date'], '%Y-%m-%d %H:%M:%S')
         photo_name = photo['image']
