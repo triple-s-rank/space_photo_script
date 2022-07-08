@@ -11,7 +11,8 @@ def publish_all_images(delay, api_key, chat_id):
     while True:
         for root, dirs, files in os.walk('images'):
             for photo in files:
-                bot.send_photo(chat_id=chat_id, photo=open(f'images/{photo}', 'rb'))
+                with open(f'images/{photo}', 'rb') as photo_to_publish:
+                    bot.send_photo(chat_id=chat_id, photo=photo_to_publish)
                 time.sleep(delay)
 
 

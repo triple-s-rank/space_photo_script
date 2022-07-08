@@ -10,9 +10,11 @@ def publish_all_images(image_name, api_key, chat_id):
     bot = telegram.Bot(token=api_key)
     if not image_name:
         for root, dirs, files in os.walk('images'):
-            bot.send_photo(chat_id=chat_id, photo=open(f'images/{random.choice(files)}', 'rb'))
+            with open(f'images/{random.choice(files)}', 'rb') as photo_to_upload:
+                bot.send_photo(chat_id=chat_id, photo=photo_to_upload)
     else:
-        bot.send_photo(chat_id=chat_id, photo=open(f'images/{image_name}', 'rb'))
+        with open(f'images/{image_name}', 'rb') as photo_to_upload:
+            bot.send_photo(chat_id=chat_id, photo=photo_to_upload)
 
 
 def main():
