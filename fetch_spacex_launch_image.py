@@ -15,8 +15,12 @@ def fetch_spacex_launch(flight_id):
         download_image(image_url, f'spacex_{image_number}.jpeg')
 
 
-if __name__ == '__main__':
+def main():
     parser = argparse.ArgumentParser(description='Enter flight id to download its images in "current_folder/images"')
     parser.add_argument('-id', '--flight_id', help='Flight id')
     args = parser.parse_args()
     fetch_spacex_launch(args.flight_id)
+
+
+if __name__ == '__main__':
+    main()

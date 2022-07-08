@@ -21,9 +21,13 @@ def get_image_name(image_url):
     return downloaded_filename
 
 
-if __name__ == '__main__':
+def main():
     Path(f'{Path.cwd()}/images').mkdir(parents=True, exist_ok=True)
     parser = argparse.ArgumentParser(description='Enter image url to download it in "current_folder/images"')
     parser.add_argument('image_url')
     args = parser.parse_args()
     download_image(args.image_url, get_image_name(args.image_url))
+
+
+if __name__ == '__main__':
+    main()
